@@ -1,86 +1,85 @@
 document.documentElement.classList.add("js");
 
-function initSpa() {
-  // cacher toutes les cards sauf la première (ou celle dans l'URL)
-  document.querySelectorAll("[data-card]").forEach((sec) => {
-    sec.hidden = true;
-  });
+const DEFAULT_CARD = "apropos";
+const DEFAULT_CV_VIEW = "profil";
 
-  // afficher la section par défaut
-  showCard("apropos");
-
-  // idem pour les vues CV
-  document.querySelectorAll("[data-cv-view]").forEach((view) => {
-    view.hidden = true;
-  });
-  showCvView("competence");
-}
-
-initSpa();
-
-
-// function showCard(cardId) {
-//   document.querySelectorAll("[data-card]").forEach(sec => {
-//     sec.hidden = (sec.id !== cardId);
-//   });
-
-//   const active = document.getElementById(cardId);
-//   const title = active?.querySelector("h1, h2");
-//   title?.focus?.();
-// }
-
-function showCard(cardId) {
-  document.querySelectorAll("[data-card]").forEach(sec => {
-    sec.hidden = (sec.id !== cardId);
-  });
-
-  // 👉 règle UX : le sous-menu CV reste ouvert tant qu'on est dans CV
-  const isCv = cardId === "cv";
-  setCvSubmenu(isCv);
-
-  // focus accessibilité
-  const active = document.getElementById(cardId);
-  const title = active?.querySelector("h1, h2");
-  title?.focus?.();
-}
-
-
-function showCvView(viewId) {
-  document.querySelectorAll("[data-cv-view]").forEach(view => {
-    view.hidden = (view.dataset.cvView !== viewId);
+function setActiveCvLink(viewId) {
+  document.querySelectorAll("[data-cvview]").forEach(a => {
+    const active = a.dataset.cvview === viewId;
+    if (active) a.setAttribute("aria-current", "true");
+    else a.removeAttribute("aria-current");
   });
 }
 
-// Toggle submenu
 function setCvSubmenu(open) {
   const submenu = document.getElementById("submenu-cv");
   const toggleBtn = document.querySelector('[data-submenu-toggle="cv"]');
-
   if (!submenu || !toggleBtn) return;
 
   submenu.hidden = !open;
   toggleBtn.setAttribute("aria-expanded", String(open));
 }
 
+function focusSectionTitle(container) {
+  const title = container?.querySelector("h1, h2");
+  title?.focus?.();
+}
+
+function showCvView(viewId) {
+  const views = document.querySelectorAll("[data-cv-view]");
+  let activeView = null;
+
+  views.forEach(view => {
+    const isActive = view.dataset.cvView === viewId;
+    view.hidden = !isActive;
+    if (isActive) activeView = view;
+  });
+
+  setActiveCvLink(viewId);
+
+  // Focus sur le titre de la vue interne (accessibilité)
+  if (activeView) {
+    const t = activeView.querySelector("h2, h3");
+    t?.focus?.();
+  }
+}
+
+function showCard(cardId, options = { forceCvDefault: false }) {
+  document.querySelectorAll("[data-card]").forEach(sec => {
+    sec.hidden = (sec.id !== cardId);
+  });
+
+  const isCv = cardId === "cv";
+  setCvSubmenu(isCv);
+
+  if (isCv && options.forceCvDefault) {
+    showCvView(DEFAULT_CV_VIEW);
+  }
+
+  const active = document.getElementById(cardId);
+  focusSectionTitle(active);
+}
+
+function initSpa() {
+  // Par défaut, tout est visible en no-JS.
+  // JS active le mode SPA en cachant tout puis en montrant une card.
+  document.querySelectorAll("[data-card]").forEach(sec => (sec.hidden = true));
+  document.querySelectorAll("[data-cv-view]").forEach(view => (view.hidden = true));
+
+  // État initial SPA
+  showCard(DEFAULT_CARD);
+  // Prépare une vue CV par défaut si l'utilisateur y va ensuite
+  // (Pas besoin de l'afficher ici)
+}
+
+initSpa();
 
 document.addEventListener("click", (e) => {
-  // const toggle = e.target.closest("[data-submenu-toggle]");
-  // if (toggle) {
-  //   const submenu = document.getElementById("submenu-cv");
-  //   const isOpen = !submenu.hidden;
-  //   submenu.hidden = isOpen;
-  //   toggle.setAttribute("aria-expanded", String(!isOpen));
-  //   return;
-  // }
-
-	const cvToggle = e.target.closest('[data-submenu-toggle="cv"]');
+  const cvToggle = e.target.closest('[data-submenu-toggle="cv"]');
   if (cvToggle) {
     e.preventDefault();
-
-    // Si on n'est pas dans CV, on y va
-    showCard("cv");
-
-    // Le sous-menu sera ouvert automatiquement par showCard("cv")
+    // Entrée dans CV → profil par défaut
+    showCard("cv", { forceCvDefault: true });
     return;
   }
 
@@ -90,35 +89,16 @@ document.addEventListener("click", (e) => {
     const route = routeLink.dataset.route;
     if (route === "apropos") showCard("apropos");
     if (route === "portfolio") showCard("portfolio");
-    // CV : ouvre la card CV (et optionnellement garde la dernière vue)
-    // showCard("cv");
+    // si tu ajoutes "services", "contact", etc: showCard(route)
     return;
   }
 
-  // const cvLink = e.target.closest("[data-cvview]");
-  // if (cvLink) {
-  //   e.preventDefault();
-  //   showCard("cv");
-  //   showCvView(cvLink.dataset.cvview);
-  //   // optionnel: fermer le submenu après sélection
-  //   const submenu = document.getElementById("submenu-cv");
-  //   const toggleBtn = document.querySelector('[data-submenu-toggle="cv"]');
-  //   submenu.hidden = true;
-  //   toggleBtn?.setAttribute("aria-expanded", "false");
-  //   return;
-  // }
-
-	const cvLink = e.target.closest("[data-cvview]");
-	if (cvLink) {
-		e.preventDefault();
-		showCard("cv");
-		showCvView(cvLink.dataset.cvview);
-
-		// IMPORTANT: ne pas fermer le sous-menu ici
-		// setCvSubmenu(false); ❌ à NE PAS faire
-		return;
-	}
+  const cvLink = e.target.closest("[data-cvview]");
+  if (cvLink) {
+    e.preventDefault();
+    // On va sur CV mais on NE force PAS profil, car l'utilisateur a choisi une vue
+    showCard("cv", { forceCvDefault: false });
+    showCvView(cvLink.dataset.cvview);
+    return;
+  }
 });
-
-
-

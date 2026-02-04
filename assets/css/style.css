@@ -1,3 +1,12 @@
+:root{
+  --font-title: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-body: "Lato", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+h1, h2, h3, nav, .btn { font-family: var(--font-title); }
+body { font-family: var(--font-body); }
+
+
 /* Par défaut: site long */
 [data-card] {
   margin-block: 4rem;
@@ -12,4 +21,92 @@
 .submenu-item a:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 3px;
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	line-height: 1.6;
+	color: #333;
+	background-color: #f9f9f9;
+}
+
+.skip-link {
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: translateY(-120%);
+	background: #000;
+	color: #fff;
+	padding: .5rem .75rem;
+	z-index: 100;
+	text-decoration: none;
+	border-radius: 0 0 6px 6px;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+	transform: translateY(0);
+}
+
+.skip-link:focus-visible {
+	transform: translateY(0);
+	top: .5rem;
+}
+
+#shell {
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+}
+
+.site-header {
+	height: 100vh;
+	background-color: #110050;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	/* justify-content: center; */
+	/* align-items: center; */
+	/* text-align: center; */
+	padding: 0 1rem;
+	padding-top: 1rem;
+	box-shadow: 0 2px 6px rgba(0, 15, 56, 0.2);
+}
+
+.site-header .brand {
+	margin-bottom: 2rem;
+}
+
+.brand-name {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: 0;
+}
+
+nav.site-nav {
+	flex-grow: 1;
+}
+
+nav.site-nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+nav.site-nav ul li {
+	margin-bottom: 1rem;
+}
+
+nav.site-nav ul li:last-child {
+	margin-bottom: 0;
+}
+
+.menu-link,
+.submenu-link{
+	color: #fff;
+	text-decoration: none;
+	font-size: 1.2rem;
+	display: block;
+	padding: .5rem;
+	border-radius: 4px;
 }
