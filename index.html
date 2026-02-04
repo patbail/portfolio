@@ -1,47 +1,71 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="assets/css/reset.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 	<title>Patrick Baillairgé</title>
 </head>
 <body>
-	<header>
-		<h1>Patrick Baillairgé</br>
-			<span>Support IT, formation & qualité de service</span>
-		</h1>
+	<a class="skip-link" href="#content">Aller au contenu principal</a>
+	<header class="site-header">
+		<div class="brand">
+      <p class="brand-name">Patrick Baillairgé</p>
+      <p class="brand-tagline">Support IT, formation &amp; qualité de service</p>
+    </div>
 
-		<nav>
+		<nav class="site-nav" aria-label="Navigation principale">
 			<ul class="nav-menu">
-				<li class="menu-item"><a href="" class="menu-link">À Propos</a></li>
 				<li class="menu-item">
-					<a href="" class="menu-link">Curriculum Vitae</a>
-					<ul class="sub-menu">
-						<li class="submenu-item"><a href="#">Compétences clés</a></li>
-						<li class="submenu-item"><a href="#">Parcours</a></li>
-						<li class="submenu-item"><a href="#">Formation & apprentissage continu</a></li>
-						<li class="submenu-item"><a href="#">En dehors du travail</a></li>
+					<a class="menu-link" href="#apropos" data-route="apropos">À Propos</a>
+				</li>
+				<li class="menu-item has-submenu">
+					<button
+						class="menu-link"
+						type="button"
+						aria-expanded="false"
+						aria-controls="submenu-cv"
+						data-submenu-toggle="cv"
+					>
+						Curriculum Vitae
+					</button>
+
+					<ul class="submenu" id="submenu-cv">
+						<li class="submenu-item">
+						<a href="#cv-competences" data-cvview="competences">Compétences clés</a>
+					</li>
+						<li class="submenu-item">
+							<a href="#cv-parcours" data-cvview="parcours">Parcours</a>
+						</li>
+						<li class="submenu-item">
+							<a href="#cv-formation" data-cvview="formation">Formation &amp; apprentissage continu</a>
+						</li>
+						<li class="submenu-item">
+							<a href="#cv-interets" data-cvview="interets">En dehors du travail</a>
+						</li>
 					</ul>
 				</li>
-				<li class="menu-item"><a href="" class="menu-link">Portfolio</a></li>
+				<li class="menu-item">
+					<a class="menu-link" href="#portfolio" data-route="portfolio">Portfolio</a>
+				</li>
 			</ul>
 		</nav>
 	</header>
-	<main>
-		<section id="main-apropos">
-			<article>
-				<h2>À Propos</h2>
+
+	<main id="content" class="site-main">
+		<section id="apropos" data-card="apropos" aria-labelledby="apropos-title">
+				<h1 id="apropos-title" tabindex="-1">À Propos</h1>
 				<p>Vous découvrirez en moi un professionnel autodidacte passionné par les technologies avec une solide expertise en soutien technique, en formation, en optimisation de procédures, en amélioration continue des services. Reconnu pour mon éthique professionnelle, ma capacité d'apprentissage supérieure et mon sens exceptionnel de l'analyse, j'ai contribué à la qualité des services en concevant des outils internes, en améliorant les processus opérationnels, et en partageant mes connaissances de manière claire et structurée résultant à des standards de performance élevé de l'équipe dans l'axe d'un service à la clientèle exceptionnel.</p>
-			</article>
 		</section>
-		<section id="main-cv">
-			<h2>Curriculum Vitae</h2>
-			<article id="cv-competence">
-				<h3>Compétences clés</h3>
+
+		<section id="cv" data-card="cv" aria-labelledby="cv-title">
+			<h1 id="cv-title" tabindex="-1">Curriculum Vitae</h1>
+			<article id="cv-competences" data-cv-view="competences">
+				<h2>Compétences clés</h2>
 				
-				<h4>Soutien technique & service à la clientèle</h4>
+				<h3>Soutien technique &amp; service à la clientèle</h3>
 				<ul>
 					<li>Assistance logicielle et serveur</li>
 					<li>Analyse et résolution de problèmes</li>
@@ -49,7 +73,7 @@
 					<li>Systèmes de billetterie et suivi des incidents</li>
 				</ul>
 
-				<h4>Formation & assurance qualité</h4>
+				<h3>Formation &amp; assurance qualité</h3>
 				<ul>
 					<li>Création de curriculum de formation</li>
 					<li>Coaching et évaluation de la qualité des services</li>
@@ -57,16 +81,18 @@
 					<li>Optimisation des processus opérationnels</li>
 				</ul>
 
-				<h4>Développement web & outils internes</h4>
+				<h3>Développement web &amp; outils internes</h3>
 				<ul>
 					<li>HTML, CSS, JavaScript, PHP, MySQL</li>
 					<li>Création de sites vitrines</li>
 					<li>Développement d'applications internes (formulaires, base de données, rapports, automatisation courriel)</li>
 				</ul>
 			</article>
-			<article id="cv-parcours">
-				<h3>Parcours</h3>
-				<h4>Leaseweb Canada — Spécialiste formation & assurance qualité / Administrateur système</br>2018 - 2025</h4>
+
+			<article id="cv-parcours" data-cv-view="parcours">
+				<h2>Parcours</h2>
+				<h3>Leaseweb Canada — Spécialiste formation & assurance qualité / Administrateur système</h3>
+				<p class="meta">2018 - 2025</p>
 				<ul>
 					<li>Création et déploiement de programmes de formation pour les nouveaux employés</li>
 					<li>Évaluation de la qualité du support technique et du service à la clientèle</li>
@@ -74,7 +100,8 @@
 					<li>Développement d'un outil interne de gestion des évaluations et de génération de rapports</li>
 					<li>Assistance technique serveur et accompagnement client</li>
 				</ul>
-				<h4>Centres d’appels (Atelka, Nordia, IQT) — Support technique & qualité</br>2007 - 2016</h4>
+				<h3>Centres d'appels (Atelka, Nordia, IQT) — Support technique & qualité</h3>
+				<p class="meta">2007 - 2016</p>
 				<ul>
 					<li>Soutien technique résidentiel (Vidéotron, Bell)</li>
 					<li>Assurance qualité et coaching des agents</li>
@@ -82,30 +109,36 @@
 					<li>Formation aux nouveaux services et procédures</li>
 				</ul>
 
-				<h4>ILS Informatique — Soutien informatique & développement web</br>2010 - aujourd’hui</h4>
+				<h3>ILS Informatique — Soutien informatique & développement web</h3>
+				<p class="meta">2005 - 2007</p>
 				<ul>
 					<li>Assistance informatique à distance (clients particuliers, personnes âgées)</li>
 					<li>Dépannage logiciel et accompagnement numérique</li>
 					<li>Création de sites web vitrines</li>
 				</ul>
 			</article>
-			<article id="cv-formation">
-				<h4>Formation & apprentissage continu</h4>
+
+			<article id="cv-formation" data-cv-view="formation">
+				<h2>Formation &amp; apprentissage continu</h2>
 				<ul>
 					<li>Programme Développeur Full Stack — Codecademy (en cours) : HTML, CSS, JavaScript, Git, Web Design</li>
 					<li>Formations Udemy — Brad Traversy (HTML/CSS, JavaScript moderne)</li>
 					<li>Diplôme d'études secondaires</li>
 				</ul>
 			</article>
-			<article id="cv-interet">
-				<h3>En dehors du travail</h3>
 
+			<article id="cv-interets" data-cv-view="interets">
+				<h2>En dehors du travail</h2>
+				<p>À compléter (ex : cuisine, jeux vidéo, jeux de société, randonnée, lecture, etc.).</p>
 			</article>
 
 		</section>
-		<section id="main-portfolio">
-			<h2>Portfolio</h2>
+
+		<section id="portfolio" data-card="portfolio" aria-labelledby="portfolio-title">
+			<h1 id="portfolio-title" tabindex="-1">Portfolio</h1>
+			<p>À venir...</p>
 		</section>
 	</main>
+	<script src="assets/scripts/main.js" defer></script>
 </body>
 </html>
